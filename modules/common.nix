@@ -149,7 +149,7 @@
     pipes
     cmatrix
     oh-my-fish
-    nixfmt
+    nixfmt-rfc-style
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
