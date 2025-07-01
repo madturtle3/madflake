@@ -63,11 +63,9 @@
     XDG_STATE_HOME = "$HOME/.local/state";
   };
   # neovim and fish
-  programs.neovim.enable = true;
   programs.neovim.defaultEditor = true;
   programs.fish.enable=true;
   users.defaultUserShell = pkgs.fish;
-
   users.users.mason = {
     isNormalUser = true;
     description = "Mason Braithwaite";
@@ -80,29 +78,46 @@
     extraSpecialArgs = {inherit inputs; };
     users = {
       "mason" = {
+        imports = [ inputs.nix4nvchad.homeManagerModule ];
         programs.git = {
           enable = true;
           userName = "Mason Braithwaite";
           userEmail = "mason@braith.net";
         };
+        programs.nvchad = {
+          enable = true;
+          chadrcConfig = ''
+-- This file needs to have same structure as nvconfig.lua 
+-- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
+-- Please read that file to know all available options :( 
+
+---@type ChadrcConfig
+local M = {}
+
+M.base46 = {
+	theme = "chadtain",
+
+	-- hl_override = {
+	-- 	Comment = { italic = true },
+	-- 	["@comment"] = { italic = true },
+	-- },
+}
+
+M.nvdash = { load_on_startup = true }
+M.ui.statusline = {
+  theme = "minimal",
+  separator_style = "rounded"
+}
+-- M.ui = {
+--       tabufline = {
+--          lazyload = false
+--      }
+--}
+
+return M'';
+          };
         home.stateVersion = "25.05";
-        xdg.configFile = {
-          nvim = {
-            source = ../config/nvim;
-            recursive = true;
-          };
-          hypr = {
-            source = ../config/hypr;
-            recursive = true;
-          };
-          lvim = {
-            source = ../config/lvim;
-            recursive = true;
-          };
-          kitty = {
-            source = ../config/kitty;
-            recursive = true;
-          };
+
           omf = {
             source = ../config/omf;
             recursive = true;
@@ -111,14 +126,7 @@
            source = ../config/fish;
            recursive = true;
           };
-          waypaper = {
-            source = ../config/waypaper;
-            recursive = true;
-          };
-          waybar = {
-            source = ../config/waybar;
-            recursive = true;
-          };
+          
         };
       };
     };
@@ -171,13 +179,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
- # steam
- programs.steam = {
-  enable = true;
-  remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-  dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-};
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

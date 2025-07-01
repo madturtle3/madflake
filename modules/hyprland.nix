@@ -1,9 +1,35 @@
-{config,pkgs,...}:
+{ config, pkgs, ... }:
 {
-	programs.hyprland.enable=true;
-	environment.systemPackages = with pkgs; [
-		kitty
-		hyprpaper
+  modules = [ inputs.home-manager.nixosModules.default ];
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "mason" = {
+        xdg.configFile = {
+          hypr = {
+            source = ../config/hypr;
+            recursive = true;
+          };
+          kitty = {
+            source = ../config/kitty;
+            recursive = true;
+          };
+          waypaper = {
+            source = ../config/waypaper;
+            recursive = true;
+          };
+          waybar = {
+            source = ../config/waybar;
+            recursive = true;
+          };
+        };
+      };
+    };
+  };
+  programs.hyprland.enable = true;
+  environment.systemPackages = with pkgs; [
+    kitty
+    hyprpaper
     # for a theme I want to use
     foot
     dunst
@@ -14,9 +40,12 @@
     # waybar stuff
     pavucontrol
     yay
-	];
-  fonts.packages = with pkgs; [
-  nerd-fonts.symbols-only
-  noto-fonts-color-emoji
-  ] ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
+  ];
+  fonts.packages =
+    with pkgs;
+    [
+      nerd-fonts.symbols-only
+      noto-fonts-color-emoji
+    ]
+    ++ builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
 }
