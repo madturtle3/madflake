@@ -2,14 +2,23 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs,inputs,self, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  self,
+  ...
+}:
 
 {
   imports = [
     ./hyprland.nix
     inputs.home-manager.nixosModules.default
   ];
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   # Bootloader.
   boot.loader.grub.device = "nodev";
   boot.loader.efi.canTouchEfiVariables = true;
@@ -20,10 +29,9 @@
   boot.loader.grub.gfxmodeEfi = "1920x1080";
   boot.loader.grub.theme = pkgs.catppuccin-grub;
 
-
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  
+
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -64,18 +72,21 @@
   };
   # neovim and fish
   programs.neovim.defaultEditor = true;
-  programs.fish.enable=true;
+  programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;
   users.users.mason = {
     isNormalUser = true;
     description = "Mason Braithwaite";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [ ];
-    shell=pkgs.fish;
+    shell = pkgs.fish;
   };
   # ho manager
   home-manager = {
-    extraSpecialArgs = {inherit inputs; };
+    extraSpecialArgs = { inherit inputs; };
     users = {
       "mason" = {
         imports = [ inputs.nix4nvchad.homeManagerModule ];
@@ -87,50 +98,48 @@
         programs.nvchad = {
           enable = true;
           chadrcConfig = ''
--- This file needs to have same structure as nvconfig.lua 
--- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
--- Please read that file to know all available options :( 
+            -- This file needs to have same structure as nvconfig.lua 
+            -- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
+            -- Please read that file to know all available options :( 
 
----@type ChadrcConfig
-local M = {}
+            ---@type ChadrcConfig
+            local M = {}
 
-M.base46 = {
-	theme = "chadtain",
+            M.base46 = {
+            	theme = "chadtain",
 
-	-- hl_override = {
-	-- 	Comment = { italic = true },
-	-- 	["@comment"] = { italic = true },
-	-- },
-}
+            	-- hl_override = {
+            	-- 	Comment = { italic = true },
+            	-- 	["@comment"] = { italic = true },
+            	-- },
+            }
 
-M.nvdash = { load_on_startup = true }
-M.ui.statusline = {
-  theme = "minimal",
-  separator_style = "rounded"
-}
--- M.ui = {
---       tabufline = {
---          lazyload = false
---      }
---}
+            M.nvdash = { load_on_startup = true }
+            M.ui.statusline = {
+              theme = "minimal",
+              separator_style = "rounded"
+            }
+            -- M.ui = {
+            --       tabufline = {
+            --          lazyload = false
+            --      }
+            --}
 
-return M'';
-          };
+            return M'';
+        };
         home.stateVersion = "25.05";
-
+        xdg.configFile = {
           omf = {
             source = ../config/omf;
             recursive = true;
           };
           fish = {
-           source = ../config/fish;
-           recursive = true;
+            source = ../config/fish;
+            recursive = true;
           };
-          
         };
       };
     };
-
   };
 
   # Allow unfree packages
@@ -178,8 +187,6 @@ return M'';
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

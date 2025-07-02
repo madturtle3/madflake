@@ -1,8 +1,7 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
-  modules = [ inputs.home-manager.nixosModules.default ];
+  imports = [ inputs.home-manager.nixosModules.default ];
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
     users = {
       "mason" = {
         xdg.configFile = {

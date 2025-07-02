@@ -5,5 +5,5 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./gaming.nix ];
+  imports = [ ./gaming.nix ./nvidia.nix ];
 }
