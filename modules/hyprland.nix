@@ -13,8 +13,8 @@
             source = ../config/kitty;
             recursive = true;
           };
-          waypaper = {
-            source = ../config/waypaper;
+          hyprpaper = {
+            source = ../config/hyprpaper;
             recursive = true;
           };
           waybar = {
