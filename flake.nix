@@ -29,6 +29,6 @@
           };
         };
       };
-    in nixpkgs.lib.recursiveUpdate { } (cfg { hostname = "mdesk2"; });
+    in nixpkgs.lib.recursiveUpdate (nixpkgs.lib.recursiveUpdate { } (cfg { hostname = "mdesk2"; })) (cfg {hostname="mlap2";});
 
 }
