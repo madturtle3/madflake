@@ -13,8 +13,8 @@
             source = ../config/kitty;
             recursive = true;
           };
-          hyprpaper = {
-            source = ../config/hyprpaper;
+          waypaper = {
+            source = ../config/waypaper;
             recursive = true;
           };
           waybar = {
@@ -27,8 +27,10 @@
   };
   programs.hyprland.enable = true;
   environment.systemPackages = with pkgs; [
+    networkmanagerapplet
     kitty
     hyprpaper
+    waypaper
     # for a theme I want to use
     foot
     dunst
