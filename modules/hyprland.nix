@@ -31,6 +31,7 @@
     kitty
     hyprpaper
     waypaper
+    bibata-cursors
     # for a theme I want to use
     foot
     dunst
