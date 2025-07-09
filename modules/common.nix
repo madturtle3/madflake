@@ -167,6 +167,7 @@
     cmatrix
     oh-my-fish
     nixfmt-rfc-style
+    go
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
