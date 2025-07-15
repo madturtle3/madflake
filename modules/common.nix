@@ -19,6 +19,7 @@
     "nix-command"
     "flakes"
   ];
+  services.flatpak.enable = true;
   # Bootloader.
   boot.loader.grub.device = "nodev";
   boot.loader.efi.canTouchEfiVariables = true;
@@ -169,6 +170,9 @@
     nixfmt-rfc-style
     go
   ];
+
+# pmo time issues 
+  time.hardwareClockInLocalTime = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
