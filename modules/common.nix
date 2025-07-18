@@ -14,6 +14,7 @@
 
   imports = [
     ./hyprland.nix
+    ./grub.nix
     inputs.home-manager.nixosModules.default
   ];
   # enable flakes

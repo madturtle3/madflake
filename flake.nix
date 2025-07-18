@@ -39,6 +39,9 @@
         };
     in
     # so this takes the list of hosts and makes automatically the output based on provided arguments
-    lib.foldl'  (acc: x: (nixpkgs.lib.recursiveUpdate acc cfg x ) ) { } [ {hostname = "mdesk2"} {hostname = "mlap2"}]
+    nixpkgs.lib.foldl' (acc: x: (nixpkgs.lib.recursiveUpdate acc (cfg x))) { } [
+      { hostname = "mdesk2"; }
+      { hostname = "mlap2"; }
+    ];
 
 }
