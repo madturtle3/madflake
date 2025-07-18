@@ -11,33 +11,17 @@
 }:
 
 {
+
   imports = [
     ./hyprland.nix
     inputs.home-manager.nixosModules.default
   ];
+  # enable flakes
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
   ];
   services.flatpak.enable = true;
-  # Bootloader.
-  boot.loader.grub.device = "nodev";
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.grub.enable = true;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.useOSProber = true;
-  boot.loader.grub.default = "saved";
-  boot.loader.grub.gfxmodeEfi = "1920x1080";
-  boot.loader.grub.theme = pkgs.catppuccin-grub;
-
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -90,12 +74,15 @@
     extraSpecialArgs = { inherit inputs; };
     users = {
       "mason" = {
+        # use NVchad
         imports = [ inputs.nix4nvchad.homeManagerModule ];
+        # setup git so it doesn't yell at me
         programs.git = {
           enable = true;
           userName = "Mason Braithwaite";
           userEmail = "mason@braith.net";
         };
+        # neovim configuration
         programs.nvchad = {
           enable = true;
           chadrcConfig = ''
@@ -130,10 +117,6 @@
         };
         home.stateVersion = "25.05";
         xdg.configFile = {
-          omf = {
-            source = ../config/omf;
-            recursive = true;
-          };
           fish = {
             source = ../config/fish;
             recursive = true;
@@ -171,7 +154,7 @@
     go
   ];
 
-# pmo time issues 
+  # pmo time issues
   time.hardwareClockInLocalTime = true;
 
   # Some programs need SUID wrappers, can be configured further or are
