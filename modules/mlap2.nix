@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [ ./kde.nix ];
+  imports = [ ./hyprland.nix ];
   
 }

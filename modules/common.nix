@@ -5,7 +5,7 @@
 {
   config,
   pkgs,
-  inputs,
+  lib,
   self,
   ...
 }:
@@ -14,7 +14,6 @@
 
   imports = [
     ./grub.nix
-    inputs.home-manager.nixosModules.default
   ];
   # enable flakes
   nix.settings.experimental-features = [
@@ -69,70 +68,13 @@
     packages = with pkgs; [ ];
     shell = pkgs.fish;
   };
-  # ho manager
-  home-manager = {
-    extraSpecialArgs = { inherit inputs; };
-    users = {
-      "mason" = {
-        # use NVchad
-        imports = [ inputs.nix4nvchad.homeManagerModule ];
-        # setup git so it doesn't yell at me
-        programs.git = {
-          enable = true;
-          userName = "Mason Braithwaite";
-          userEmail = "mason@braith.net";
-        };
-        # neovim configuration
-        programs.nvchad = {
-          enable = true;
-          chadrcConfig = ''
-            -- This file needs to have same structure as nvconfig.lua 
-            -- https://github.com/NvChad/ui/blob/v3.0/lua/nvconfig.lua
-            -- Please read that file to know all available options :( 
-
-            ---@type ChadrcConfig
-            local M = {}
-
-            M.base46 = {
-            	theme = "chadtain",
-
-            	-- hl_override = {
-            	-- 	Comment = { italic = true },
-            	-- 	["@comment"] = { italic = true },
-            	-- },
-            }
-
-            M.nvdash = { load_on_startup = true }
-            M.ui.statusline = {
-              theme = "minimal",
-              separator_style = "rounded"
-            }
-            -- M.ui = {
-            --       tabufline = {
-            --          lazyload = false
-            --      }
-            --}
-
-            return M'';
-        };
-        home.stateVersion = "25.05";
-        xdg.configFile = {
-          fish = {
-            source = ../config/fish;
-            recursive = true;
-          };
-        };
-      };
-    };
-  };
-
+  
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.catppuccin-grub.flavor = "frappe";
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    home-manager
     ripgrep
     firefox
     wget
@@ -153,7 +95,7 @@
     nixfmt-rfc-style
     go
   ];
-
+  fonts.packages = builtins.filter lib.attrsets.isDerivation (builtins.attrValues pkgs.nerd-fonts);
   # pmo time issues
   time.hardwareClockInLocalTime = true;
 
