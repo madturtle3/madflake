@@ -2,6 +2,7 @@
 {
   programs.hyprland.enable = true;
   environment.systemPackages = with pkgs; [
+    chezmoi # for the dots because I am done with this
     networkmanagerapplet
     kitty
     hyprpaper
