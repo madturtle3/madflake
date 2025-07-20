@@ -91,7 +91,6 @@
     google-chrome
     pipes
     cmatrix
-    oh-my-fish
     nixfmt-rfc-style
     go
   ];
