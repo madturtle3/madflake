@@ -8,7 +8,7 @@
     hyprpaper
     bibata-cursors
     waybar
-    # waybar stuff
+    wofi
     pavucontrol
   ];
   fonts.packages =
