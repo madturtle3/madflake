@@ -23,7 +23,6 @@
     hyprlock
     hypridle
     pavucontrol
-    bluema
   ];
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
