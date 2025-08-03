@@ -2,18 +2,6 @@
 {
   # hopefully will fix icons not showing
   # in GTK
-
-  gtk = {
-    enable = true;
-    iconTheme = {
-      package = pkgs.adwaita-icon-theme; # Or your preferred icon theme package
-      name = "Adwaita"; # Or the name of your icon theme
-    };
-    theme = {
-      package = pkgs.adwaita-theme; # Or your preferred GTK theme package
-      name = "Adwaita"; # Or the name of your GTK theme
-    };
-  };
   # BLE configuration
   hardware.bluetooth = {
     enable = true;
@@ -37,6 +25,7 @@
     hyprlock
     hypridle
     pavucontrol
+    libsForQt5.breeze-icons
   ];
   fonts.packages = with pkgs; [
     nerd-fonts.symbols-only
